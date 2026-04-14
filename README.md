@@ -84,75 +84,47 @@ pip install -r requirements.txt
 python -m app.populate_db
 ```
 
-## Changing Datasets
-If you wish to use separate dataset than the provided one,
-Make sure populate_db.py is pointing to the dataset you want to use.
-
-Example for the medium dataset:
-
-load_taxa("data/medium_nodes.dmp")
-load_taxon_names("data/medium_names.dmp")
-Running the Application
-Step 1: Start the FastAPI backend
+## Running the Application
+Step 1. Start the FastAPI backend
+```text
 uvicorn app.api:app --reload
+```
+The API will run at: http://127.0.0.1:8000
 
-The API will run at:
-
-http://127.0.0.1:8000
-
-Swagger docs:
-
-http://127.0.0.1:8000/docs
-
-Step 2: Start the Dash frontend
-
+Step 2. Start the Dash frontend
 Open a second terminal and run:
-
+```text
 python -m app.dash_app
+```
+The Dash app will run at: http://127.0.0.1:8050
 
-The Dash app will run at:
 
-http://127.0.0.1:8050
+## Dataset Notes
 
-Example API Endpoints
+This project was tested with:
 
-Get one taxon by ID
-http://127.0.0.1:8000/taxa?tax_id=562
+a very small custom dataset\
+a larger subset made from NCBI taxonomy dump files
 
-Search taxonomy names
-http://127.0.0.1:8000/search?keyword=coli&mode=contains&page=1&per_page=10
-
-Dataset Notes
-
-This project can be tested with:
-
-a very small custom dataset
-a medium subset made from NCBI taxonomy dump files
-larger subsets for performance and usability testing
 
 The medium dataset used in testing was built from the NCBI taxonomy dump and contained:
 
-1,403 taxa
+
+1,403 taxa\
 11,723 taxon names
-Challenges and Design Choices
+
+## Challenges and Design Choices
 
 Some important design choices in this project include:
 
-using SQLModel for a simple ORM-style database structure
-separating the backend and frontend into FastAPI and Dash
-preserving search state in the URL so users can return to previous results
-starting with a small dataset, then scaling to a larger subset for testing
+using SQLModel for a simple ORM-style database structure\
+separating the backend and frontend into FastAPI and Dash\
+preserving search state in the URL so users can return to previous results\
+starting with a small dataset, then scaling to a larger subset for testing\
 formatting the Dash interface to make taxonomy relationships easier to read
-Future Improvements
 
-Possible future improvements include:
 
-more efficient database-level pagination in /search
-filtering names by class
-improved loading and error messages
-deployment to a cloud or local server environment
-support for larger taxonomy subsets
-Author
+## Author
 
 Nicholas Demski
 
