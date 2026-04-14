@@ -104,5 +104,5 @@ def load_taxon_names(file_path: str):
 
 if __name__ == "__main__":
     create_db_and_tables()
-    load_taxa("data/small_nodes.dmp")
-    load_taxon_names("data/small_names.dmp")
+    load_taxa("data/medium_nodes.dmp")
+    load_taxon_names("data/medium_names.dmp")
