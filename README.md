@@ -36,7 +36,9 @@ taxonomy-explorer/
 ├── taxonomy.db
 ├── requirements.txt
 └── README.md
-Technologies Used
+```
+
+## Technologies Used
 Python
 SQLite
 SQLModel
@@ -46,78 +48,44 @@ Requests
 Uvicorn
 Database Design
 
-The project uses two main tables:
+# Tables
 
-Taxon
+__Taxon__ - Stores core taxonomy information:
 
-Stores core taxonomy information:
-
-tax_id
-parent_tax_id
+tax_id\
+parent_tax_id\
 rank
-TaxonName
 
-Stores names associated with each taxon:
+__TaxonName__ - Stores names associated with each taxon:
 
-id
-tax_id
-name_txt
-unique_name
+id\
+tax_id\
+name_txt\
+unique_name\
 name_class
 
-The Taxon table uses a self-referential foreign key through parent_tax_id to represent the taxonomy hierarchy.
-
-Features
-Database
-Parses taxonomy data from .dmp files
-Loads taxonomy nodes and names into SQLite
-Supports both small test datasets and larger NCBI-based subsets
-FastAPI Backend
-GET /taxa
-returns detailed information for a selected taxon
-includes rank, parent, names, and children
-GET /search
-returns paginated taxon name matches
-supports contains, starts_with, and ends_with search modes
-Dash Frontend
-Search page with:
-keyword input
-search mode dropdown
-search button
-Results page with:
-clickable taxon IDs
-taxon names
-name classes
-pagination controls
-Detail page with:
-taxon ID
-scientific name
-rank
-clickable parent
-children table
-names table
-back-to-results navigation
-Setup Instructions
+## Setup Instructions
 1. Clone the repository
-git clone <your-repo-url>
+```text
+git clone https://github.com/Demskini/taxonomy-explorer
 cd taxonomy-explorer
+```
 2. Create and activate a virtual environment
+```text
 python -m venv .venv
 source .venv/bin/activate
+```
 3. Install dependencies
+```text
 pip install -r requirements.txt
-Populating the Database
-
-To create and load the database, run:
-
+```
+4. Populate the Database
+```text
 python -m app.populate_db
+```
 
-This will:
-
-create the SQLite database
-create the Taxon and TaxonName tables
-load data from the selected .dmp files
-
+## Changing Datasets
+If you wish to use separate dataset than the provided one,
 Make sure populate_db.py is pointing to the dataset you want to use.
 
 Example for the medium dataset:
