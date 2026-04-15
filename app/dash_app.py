@@ -15,7 +15,7 @@ from dash.exceptions import PreventUpdate
 
 API_BASE_URL = "http://127.0.0.1:8000"
 
-# Northeastern-inspired colors
+# Northeastern inspired colors
 PRIMARY_RED = "#C8102E"
 DARK = "#2D2A26"
 LIGHT_BG = "#F7F7F8"
@@ -131,6 +131,22 @@ def search_layout():
                         clearable=False,
                         style={
                             "width": "220px",
+                            "display": "inline-block",
+                            "marginRight": "10px",
+                        },
+                    ),
+                    dcc.Dropdown(
+                        id="per-page-dropdown",
+                        options=[
+                            {"label": "10 per page", "value": 10},
+                            {"label": "25 per page", "value": 25},
+                            {"label": "50 per page", "value": 50},
+                            {"label": "100 per page", "value": 100},
+                        ],
+                        value=10,
+                        clearable=False,
+                        style={
+                            "width": "150px",
                             "display": "inline-block",
                             "marginRight": "10px",
                         },
@@ -262,6 +278,7 @@ def display_page(pathname):
 @app.callback(
     Output("keyword-input", "value"),
     Output("mode-dropdown", "value"),
+    Output("per-page-dropdown", "value"),
     Input("url", "search"),
 )
 def populate_search_inputs(search):
@@ -270,11 +287,15 @@ def populate_search_inputs(search):
 
     keyword = params.get("keyword", [""])[0]
     mode = params.get("mode", ["contains"])[0]
+    per_page = int(params.get("per_page", [10])[0])
 
     if mode not in {"contains", "starts_with", "ends_with"}:
         mode = "contains"
 
-    return keyword, mode
+    if per_page not in {10, 25, 50, 100}:
+        per_page = 10
+
+    return keyword, mode, per_page
 
 
 @app.callback(
@@ -282,14 +303,15 @@ def populate_search_inputs(search):
     Input("search-button", "n_clicks"),
     State("keyword-input", "value"),
     State("mode-dropdown", "value"),
+    State("per-page-dropdown", "value"),
     prevent_initial_call=True,
 )
-def update_url_from_search(n_clicks, keyword, mode):
+def update_url_from_search(n_clicks, keyword, mode, per_page):
     """Update the query string when the user clicks Search."""
     if not keyword:
         raise PreventUpdate
 
-    return build_search_query(keyword, mode, page=1, per_page=10)
+    return build_search_query(keyword, mode, page=1, per_page=per_page)
 
 
 @app.callback(
