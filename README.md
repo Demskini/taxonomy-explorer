@@ -65,7 +65,8 @@ unique_name\
 name_class
 
 ## Setup Instructions
-1. Clone the repository
+1. Clone the repository\
+Run the following commands in the directory where you want the project folder to be created:
 ```text
 git clone https://github.com/Demskini/taxonomy-explorer
 cd taxonomy-explorer
@@ -94,6 +95,7 @@ The API will run at: http://127.0.0.1:8000
 Step 2. Start the Dash frontend
 Open a second terminal and run:
 ```text
+source .venv/bin/activate
 python -m app.dash_app
 ```
 The Dash app will run at: http://127.0.0.1:8050
@@ -101,14 +103,14 @@ The Dash app will run at: http://127.0.0.1:8050
 
 ## Dataset Notes
 
-This project was tested with:
+__This project was tested with:__
+
 
 a very small custom dataset\
 a larger subset made from NCBI taxonomy dump files
 
 
-The medium dataset used in testing was built from the NCBI taxonomy dump and contained:
-
+__The medium dataset used in testing was built from the NCBI taxonomy dump and contained:__
 
 1,403 taxa\
 11,723 taxon names
