@@ -64,6 +64,11 @@ name_txt\
 unique_name\
 name_class
 
+## Prerequisites
+Before running this project, make sure the following are installed on your computer:
+- Python 3
+- Git
+
 ## Setup Instructions (Mac/Linux)
 1. Clone the repository\
 Run the following commands in the directory where you want the project folder to be created:
