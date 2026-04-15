@@ -39,14 +39,14 @@ taxonomy-explorer/
 ```
 
 ## Technologies Used
-Python
-SQLite
-SQLModel
-FastAPI
-Dash
-Requests
-Uvicorn
-Database Design
+- Python
+- SQLite
+- SQLModel
+- FastAPI
+- Dash
+- Requests
+- Uvicorn
+- Database Design
 
 # Tables
 
@@ -64,7 +64,7 @@ name_txt\
 unique_name\
 name_class
 
-## Setup Instructions
+## Setup Instructions (Mac/Linux)
 1. Clone the repository\
 Run the following commands in the directory where you want the project folder to be created:
 ```text
@@ -88,11 +88,12 @@ python -m app.populate_db
 ## Running the Application
 Step 1. Start the FastAPI backend
 ```text
+source .venv/bin/activate
 uvicorn app.api:app --reload
 ```
 The API will run at: http://127.0.0.1:8000
 
-Step 2. Start the Dash frontend
+Step 2. Start the Dash frontend\
 Open a second terminal and run:
 ```text
 source .venv/bin/activate
@@ -103,17 +104,17 @@ The Dash app will run at: http://127.0.0.1:8050
 
 ## Dataset Notes
 
+### By default, running `python -m app.populate_db` will automatically load the medium dataset (`data/medium_nodes.dmp` and `data/medium_names.dmp`) into the database.
+
 __This project was tested with:__
 
-
-a very small custom dataset\
-a larger subset made from NCBI taxonomy dump files
-
+- a very small custom dataset
+- a larger subset made from NCBI taxonomy dump files
 
 __The medium dataset used in testing was built from the NCBI taxonomy dump and contained:__
 
-1,403 taxa\
-11,723 taxon names
+- 1,403 taxa
+- 11,723 taxon names
 
 ## Challenges and Design Choices
 
