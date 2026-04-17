@@ -7,7 +7,7 @@ a search mode, view matching taxonomy records, and click into
 a taxon details page.
 """
 
-from urllib.parse import urlencode, parse_qs
+from urllib.parse import urlencode, parse_qs, quote, unquote
 
 import requests
 from dash import Dash, html, dcc, Input, Output, State, dash_table, callback_context
@@ -390,11 +390,12 @@ def run_search_from_url(search):
 
     formatted_results = []
     current_search_query = build_search_query(keyword, mode, page, per_page)
+    encoded_back = quote(current_search_query, safe="")
 
     for result in data["results"]:
         formatted_results.append(
             {
-                "tax_id": f"[{result['tax_id']}](/taxon/{result['tax_id']}?back={current_search_query})",
+                "tax_id": f"[{result['tax_id']}](/taxon/{result['tax_id']}?back={encoded_back})",
                 "name_txt": result["name_txt"],
                 "name_class": result["name_class"],
             }
@@ -427,7 +428,16 @@ def load_taxon_detail(pathname, search):
         return html.H2("Invalid taxon ID")
 
     params = parse_qs(search.lstrip("?")) if search else {}
-    back_href = params.get("back", ["/"])[0]
+
+    raw_back = params.get("back", [""])[0]
+    decoded_back = unquote(raw_back)
+
+    if decoded_back.startswith("?"):
+        back_href = f"/{decoded_back}"
+    elif decoded_back.startswith("/"):
+        back_href = decoded_back
+    else:
+        back_href = "/"
 
     try:
         response = requests.get(
@@ -469,7 +479,7 @@ def load_taxon_detail(pathname, search):
     )
 
     if data["parent"]:
-        parent_href = f"/taxon/{data['parent']['tax_id']}?back={back_href}"
+        parent_href = f"/taxon/{data['parent']['tax_id']}?back={quote(back_href, safe='')}"
         parent_section = html.Div(
             [
                 html.Span("Parent: ", style={"fontWeight": "bold", "color": DARK}),
@@ -485,7 +495,7 @@ def load_taxon_detail(pathname, search):
     if data["children"]:
         child_rows = []
         for i, child in enumerate(data["children"]):
-            child_href = f"/taxon/{child['tax_id']}?back={back_href}"
+            child_href = f"/taxon/{child['tax_id']}?back={quote(back_href, safe='')}"
             child_rows.append(
                 html.Tr(
                     [
